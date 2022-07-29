@@ -8,6 +8,10 @@ export const useCounterStore = defineStore({
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
+    numCheck(state) {
+      if (state.counter % 2 === 0) return "even";
+      return "odd";
+    }
   },
   actions: {
     increment() {
@@ -15,6 +19,6 @@ export const useCounterStore = defineStore({
     },
     decreasement() {
       this.counter--;
-    }
+    },
   },
 });
