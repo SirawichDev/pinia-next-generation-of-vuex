@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { useNormalCounter } from "@/use/useCounter";
 import { useCounterStore } from "@/stores/counter";
-const counter = useCounterStore();
 
 /**
  * * normal vue state
  */
 const { numCheck, normalCounter, normalDec, normalInc } = useNormalCounter();
+
+/**
+ * * state management with pinia
+ */
+const piniaCounter = useCounterStore();
 </script>
 
 <template>
@@ -14,6 +18,9 @@ const { numCheck, normalCounter, normalDec, normalInc } = useNormalCounter();
     <img class="pinia" width="150" src="@/assets/pinia.svg" />
     <main>
       <div class="main-container">
+        <div class="sidebar">
+          {{ normalCounter }}
+        </div>
         <h1 ref="header">{{ normalCounter.title }}</h1>
         <div class="counter-container">
           <button @click="normalDec">-</button>
@@ -23,13 +30,16 @@ const { numCheck, normalCounter, normalDec, normalInc } = useNormalCounter();
         <h1 class="text-center">{{ numCheck }}</h1>
       </div>
       <div class="main-container">
-        <h1>{{ counter.piniaTitle }}</h1>
-        <div class="counter-container">
-          <button @click="normalDec">-</button>
-          <p>Value: {{ normalCounter.count }}</p>
-          <button @click="normalInc">+</button>
+        <div class="sidebar">
+          {{ piniaCounter }}
         </div>
-        <h1 class="text-center">{{ numCheck }}</h1>
+        <h1>{{ piniaCounter.piniaTitle }}</h1>
+        <div class="counter-container">
+          <button @click="piniaCounter.decreasement">-</button>
+          <p>Value: {{ piniaCounter.counter }}</p>
+          <button @click="piniaCounter.increment">+</button>
+        </div>
+        <h1 class="text-center">{{ piniaCounter.numCheck }}</h1>
       </div>
     </main>
   </div>
@@ -55,6 +65,13 @@ main {
   margin-bottom: 10px;
   border-radius: 8px;
 }
+.sidebar {
+  position: absolute;
+  right: -85%;
+  padding: 10px;
+  width: 300px;
+  box-shadow: 0.5rem 0.2rem rgb(133, 63, 63);
+}
 .counter-container {
   position: relative;
   display: flex;
@@ -62,6 +79,7 @@ main {
   justify-content: center;
   gap: 20px;
 }
+
 button {
   border: none;
   background-color: transparent;
